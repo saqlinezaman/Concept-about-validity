@@ -1,48 +1,39 @@
 <?php
-    class bankAccount{
-        private $balance;
-        public function getBalance(){
-            return $this->balance;
-        }
-        public function deposit($amount){
-            if($amount > 0){
-                $this->balance += $amount;
-            }
-            return $this;
-        }
-        public function isGreaterThanOneYear(){
-            $givenDateTime = new DateTime($this->givenDate);
-            $currentDateTime = new DateTime();
-            $interval =  $currentDateTime->diff($givenDateTime);
-            // the logic 
-            if($interval->y > 1 || ($interval->y == 1 && $interval->m > 0) || ($interval->y == 1 || $interval->m == 0 || $interval->d > 0)){
-                return true;
-            }else{
-                return false;
-            }
-        }
-    }
-    class savingsAccount extends bankAccount{
-        private $interestRate;
-        public $givenDate = "2024-08-5";
-        
-        public function calculateAnualFee(){
-            if($this->isGreaterThanOneYear()){
-                if($this->getBalance() > 200){
-                    echo "Taka 200 BDT adjasted for your annual fee ";
-                    $newBalance =  ($this->getBalance() - 200);
-                    echo "your current balance is : ".$newBalance;
-                }else{
-
-                }
-            }
-        }
-       public function setInterestRate($interestRate){
-        $this->interestRate = $interestRate;
-       } 
-       function addInterest(){
-        $interest = $this->interestRate * $this->getBalance();
-        $this->deposit($interest);
-       }
-    }
+include 'access.php';
+$account = new savingsAccount('1234');
+$account->deposit(500);
+$account->setInterestRate(0.05);
+$account->addInterest();
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data</title>
+</head>
+<style>
+    body{
+        display: flex;
+        justify-content: center;
+        height: 90vh;
+        align-items: center;
+        background-color: #0FA4AF;
+        color: white;
+    }
+    .show{
+        border: 3px solid white;
+        text-align: center;
+        width: 70%;
+        height: 200px;
+        margin: 20px;
+        padding: 10px 0;
+    }
+</style>
+<body>
+    <div class="show">
+        <h1><?php echo "Your Current Balance is = ".$account->getBalance().' $'."<br>"; ?> </h1>
+        <h3><?php $account->calculateAnualFee();?></h3>
+    </div>
+</body>
+</html>
