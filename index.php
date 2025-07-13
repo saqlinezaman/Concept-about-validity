@@ -32,8 +32,17 @@
                     echo "Taka 200 BDT adjasted for your annual fee ";
                     $newBalance =  ($this->getBalance() - 200);
                     echo "your current balance is : ".$newBalance;
+                }else{
+
                 }
             }
         }
+       public function setInterestRate($interestRate){
+        $this->interestRate = $interestRate;
+       } 
+       function addInterest(){
+        $interest = $this->interestRate * $this->getBalance();
+        $this->deposit($interest);
+       }
     }
 ?>
