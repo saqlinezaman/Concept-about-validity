@@ -1,39 +1,53 @@
-<?php
-include 'access.php';
-$account = new savingsAccount('1234');
-$account->deposit(500);
-$account->setInterestRate(0.05);
-$account->addInterest();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data</title>
+    <title>Bank Account Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 400px;
+        }
+        .card h2 {
+            color: #0077cc;
+            margin-bottom: 10px;
+        }
+        .card p {
+            margin: 8px 0;
+            font-size: 16px;
+        }
+    </style>
 </head>
-<style>
-    body{
-        display: flex;
-        justify-content: center;
-        height: 90vh;
-        align-items: center;
-        background-color: #0FA4AF;
-        color: white;
-    }
-    .show{
-        border: 3px solid white;
-        text-align: center;
-        width: 70%;
-        height: 200px;
-        margin: 20px;
-        padding: 10px 0;
-    }
-</style>
 <body>
-    <div class="show">
-        <h1><?php echo "Your Current Balance is = ".$account->getBalance().' $'."<br>"; ?> </h1>
-        <h3><?php $account->calculateAnualFee();?></h3>
-    </div>
+
+<?php
+include 'access.php';
+
+$account = new savingsAccount();
+$account->setPin("1234");
+$account->deposit(1000);
+$account->setInterestRate(0.05);
+$account->addInterest();
+$account->calculateAnnualFee();
+echo $account->showSummary();
+
+$account1 = new savingsAccount();
+$account1->setPin("1244");
+$account1->deposit(220);
+$account1->setInterestRate(0.05);
+$account1->addInterest();
+$account1->calculateAnnualFee();
+echo $account1->showSummary();
+?>
+
 </body>
 </html>
